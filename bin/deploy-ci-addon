@@ -1,9 +1,11 @@
 #!/bin/sh
 
 ADDON=$1
-BASE=root@forge.cloudbees.com:/opt/shards/default/data/cloudbees/scm-dav/distributions/ci-addons
+USERHOST=root@forge.cloudbees.com
+BASE=/opt/shards/default/data/cloudbees/scm-dav/distributions/ci-addons
                       
 echo Deploying addon scripts
-CMD="scp $1/*-addon $BASE/$1/"
+ssh ${USERHOST} "mkdir -p ${BASE}/$1/"
+CMD="scp $1/*-addon ${USERHOST}:$BASE/$1/"
 echo $CMD
 $CMD
