@@ -28,7 +28,7 @@ mkdir -p /scratch/hudson/rubies
 
 ruby_name=ruby-${RUBY_VERSION}-i686 #$(uname -p)
 
-test -f /scratch/hudson/rubies/${ruby_name}.zip ||  wget -P /scratch/hudson/rubies https://repository-cloudbees.forge.cloudbees.com/distributions/ci-addons/ruby/${ruby_name}.zip > /dev/null
+test -f /scratch/hudson/rubies/${ruby_name}.zip ||  wget -q -P /scratch/hudson/rubies https://repository-cloudbees.forge.cloudbees.com/distributions/ci-addons/ruby/${ruby_name}.zip > /dev/null
 
 test -f /scratch/hudson/rubies/${ruby_name}/bin/ruby || unzip -d / /scratch/hudson/rubies/${ruby_name}.zip > /dev/null
 
