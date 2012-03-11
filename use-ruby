@@ -17,7 +17,7 @@
 # export RUBY_VERSION=1.8.7-p352
 #  curl -s https://repository-cloudbees.forge.cloudbees.com/distributions/ci-addons/ruby/use-ruby | source /dev/stdin
 
-set +x
+#set +x
 set -e
 
 if [[ -z $RUBY_VERSION ]]; then
