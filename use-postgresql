@@ -18,22 +18,19 @@
 
 set -eu
 
-if [ "${WORKSPACE:-notset}" == "notset" ]; then
-  echo '$WORKSPACE is not set'
-  exit 1
+if [[ -z ${POSTGRESQL_VERSION:-} ]]; then
+   echo "You must set the POSTGRESQL_VERSION environment variable." 1>&2
+   exit 1
 fi
 
-VERSION=0.1
-PGVERSION=${PGVERSION:-9.0.4}
-ARCH=`uname -i`
-# To make matrix builds work, we need to hardwire the workspace
-ROOT_WORKSPACE=/scratch/hudson/workspace
+VERSION=0.2
+PGVERSION=${POSTGRESQL_VERSION:-9.0.4}
+ARCH=`uname -m`
+# We don't currently have x86_64 builds of PostgreSQL; so hardwire to i686
+ARCH=i686
 PGNAME=postgresql-${PGVERSION}-${ARCH}
-PGHOME=${ROOT_WORKSPACE}/postgresql/${PGNAME}
+PGHOME=/scratch/hudson/postgresqls/${PGNAME}
 PGPORT=${PGPORT:-5432}
-# Create your database in
-# /tmp/postgresql-data       for transient data - default
-# $WORKSPACE/postgresql-data for persisted data
 PGDATA=${PGDATA:-/tmp/postgresql-data}
 
 echo '##########################################################'
@@ -45,22 +42,28 @@ echo "# Architecture: ${ARCH}"
 echo "# Data:         ${PGDATA}"
 
 if [ ! -f $PGHOME/bin/psql ];then
+  CI_URL="https://repository-cloudbees.forge.cloudbees.com/distributions/ci-addons"
   FILE=postgresql-${PGVERSION}-${ARCH}.tar.bz2
   echo "# Installing PostgreSQL to ${PGHOME}"
   wget -P /tmp ${CI_URL}/postgresql/${FILE} 
   mkdir -p $PGHOME
-  tar xjf /tmp/${FILE} -C ${PGHOME}/..
+  tar xjf /tmp/${FILE} -C ${PGHOME} --strip-components 1
 fi
+
+################################################################################
+# Configure profile
+################################################################################
+export PGHOME=${PGHOME}
+export PGPORT=${PGPORT}
+export PGDATA=${PGDATA}
+export PATH=${PGHOME}/bin:${PATH}
+export LD_LIBRARY_PATH=${PGHOME}/lib:${LD_LIBRARY_PATH:-}
 
 ################################################################################
 # Now start the database
 # You _may_ need to copy the PATH, PGDATA, LD_LIBRARY_PATH settings to your
 #  own build script
 ################################################################################
-export PATH=${PGHOME}/bin:${PATH}
-export LD_LIBRARY_PATH=${PGHOME}/lib:${LD_LIBRARY_PATH:-}
-export PGDATA
-
 if [ ! -d ${PGDATA} ]; then
   echo "# Initialising database in ${PGDATA}"
   initdb > /dev/null
@@ -73,16 +76,8 @@ if [ -f ${PGDATA}/postmaster.pid ]; then
   echo "# Using existing PostgreSQL engine"
 else
   echo "# Starting new PostgreSQL engine"
-  pg_ctl -D ${PGDATA} -l ${WORKSPACE}/postgres.log start
+  pg_ctl -D ${PGDATA} -l ${PGDATA}/postgres.log start
   echo "# Having a nap to give the server time to start listening"
   sleep 10
 fi
 
-echo '##########################################################'
-echo '# Set the following in your environment for actual builds:'
-echo "PGHOME=${ROOT_WORKSPACE}/postgresql/${PGNAME}"
-echo "PGPORT=${PGPORT}"
-echo "PGDATA=${PGDATA}"
-echo 'PATH=${PGHOME}/bin:${PATH}'
-echo 'LD_LIBRARY_PATH=${PGHOME}/lib:${LD_LIBRARY_PATH:-}'
-echo '##########################################################'

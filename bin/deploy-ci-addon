@@ -2,10 +2,11 @@
 
 ADDON=$1
 USERHOST=root@forge.cloudbees.com
-BASE=/opt/shards/default/data/cloudbees/scm-dav/distributions/ci-addons
-                      
+BASE=/opt/shards/shard02/data/cloudbees/scm-dav/distributions/ci-addons
+VERSION=`cat $1/version`
+
 echo Deploying addon scripts
-ssh ${USERHOST} "mkdir -p ${BASE}/$1/"
-CMD="scp $1/*-addon ${USERHOST}:$BASE/$1/"
+CMD="scp use-$ADDON ${USERHOST}:$BASE"
 echo $CMD
 $CMD
+echo Available at https://repository-cloudbees.forge.cloudbees.com/distributions/ci-addons/run-${ADDON}
