@@ -1,6 +1,8 @@
-set -eu
-PGVERSION=${PGVERSION:-9.1.3}
-ARCH=`uname -i`
+#set -eu
+umask 077
+unset PGVERSION
+PGVERSION=${PGVERSION:-9.0.7}
+ARCH=`uname -m`
 PGNAME=postgresql-${PGVERSION}-${ARCH}
 
 cd /tmp

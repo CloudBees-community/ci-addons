@@ -25,8 +25,9 @@ if [[ -z $RUBY_VERSION ]]; then
 fi
 
 mkdir -p /scratch/hudson/rubies
+ARCH=`uname -m`
 
-ruby_name=ruby-${RUBY_VERSION}-i686 #$(uname -p)
+ruby_name=ruby-${RUBY_VERSION}-${ARCH} #$(uname -p)
 
 test -f /scratch/hudson/rubies/${ruby_name}.zip ||  wget -q -P /scratch/hudson/rubies https://repository-cloudbees.forge.cloudbees.com/distributions/ci-addons/ruby/${ruby_name}.zip > /dev/null
 

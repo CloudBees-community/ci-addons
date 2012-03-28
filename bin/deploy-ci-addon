@@ -9,4 +9,4 @@ echo Deploying addon scripts
 CMD="scp use-$ADDON ${USERHOST}:$BASE"
 echo $CMD
 $CMD
-echo Available at https://repository-cloudbees.forge.cloudbees.com/distributions/ci-addons/run-${ADDON}
+echo Available at https://repository-cloudbees.forge.cloudbees.com/distributions/ci-addons/use-${ADDON}

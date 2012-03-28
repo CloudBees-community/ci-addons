@@ -26,8 +26,6 @@ fi
 VERSION=0.2
 PGVERSION=${POSTGRESQL_VERSION:-9.0.4}
 ARCH=`uname -m`
-# We don't currently have x86_64 builds of PostgreSQL; so hardwire to i686
-ARCH=i686
 PGNAME=postgresql-${PGVERSION}-${ARCH}
 PGHOME=/scratch/hudson/postgresqls/${PGNAME}
 PGPORT=${PGPORT:-5432}
@@ -78,6 +76,6 @@ else
   echo "# Starting new PostgreSQL engine"
   pg_ctl -D ${PGDATA} -l ${PGDATA}/postgres.log start
   echo "# Having a nap to give the server time to start listening"
-  sleep 10
+  sleep 15
 fi
 
