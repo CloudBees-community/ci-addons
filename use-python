@@ -1,0 +1,39 @@
+################################################################################
+#  Copyright 2010-2011 CloudBees Inc.
+#
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
+#  You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
+################################################################################
+# To call this script: 
+# export PYTHON_VERSION=2.7.2
+#  curl -s https://repository-cloudbees.forge.cloudbees.com/distributions/ci-addons/ruby/use-python | source /dev/stdin
+
+#set +x
+set -e
+
+if [[ -z $PYTHON_VERSION ]]; then
+   echo "You must set the PYTHON_VERSION environment variable. See http://wiki.cloudbees.com/bin/view/DEV/Python+Builds" 1>&2
+fi
+
+mkdir -p /scratch/hudson/pythons
+ARCH=`uname -m`
+
+python_name=python-${PYTHON_VERSION}-${ARCH} #$(uname -p)
+
+test -f /scratch/hudson/rubies/${python_name}.zip ||  wget -q -P /scratch/hudson/pythons https://repository-cloudbees.forge.cloudbees.com/distributions/ci-addons/python/${python_name}.zip > /dev/null
+
+test -f /scratch/hudson/python/${ruby_name}/bin/python || unzip -d / /scratch/hudson/pythons/${python_name}.zip > /dev/null
+
+export PATH=/scratch/hudson/python/${python_name}/bin:$PATH
+unset GEM_PATH
+unset GEM_HOME
+unset BUNDLE_PATH
