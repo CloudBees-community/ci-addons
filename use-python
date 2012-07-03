@@ -15,8 +15,7 @@
 ################################################################################
 # To call this script: 
 # export PYTHON_VERSION=2.7.2
-#  curl -s https://repository-cloudbees.forge.cloudbees.com/distributions/ci-addons/ruby/use-python | source /dev/stdin
-
+#  curl -s https://repository-cloudbees.forge.cloudbees.com/distributions/ci-addons/use-python | source /dev/stdin
 #set +x
 set -e
 
@@ -29,11 +28,8 @@ ARCH=`uname -m`
 
 python_name=python-${PYTHON_VERSION}-${ARCH} #$(uname -p)
 
-test -f /scratch/hudson/rubies/${python_name}.zip ||  wget -q -P /scratch/hudson/pythons https://repository-cloudbees.forge.cloudbees.com/distributions/ci-addons/python/${python_name}.zip > /dev/null
+test -f /scratch/hudson/pythons/${python_name}.zip ||  wget -q -P /scratch/hudson/pythons https://repository-cloudbees.forge.cloudbees.com/distributions/ci-addons/python/${python_name}.zip > /dev/null
 
-test -f /scratch/hudson/python/${ruby_name}/bin/python || unzip -d / /scratch/hudson/pythons/${python_name}.zip > /dev/null
+test -f /scratch/hudson/pythons/${python_name}/bin/python || unzip -d / /scratch/hudson/pythons/${python_name}.zip > /dev/null
 
-export PATH=/scratch/hudson/python/${python_name}/bin:$PATH
-unset GEM_PATH
-unset GEM_HOME
-unset BUNDLE_PATH
+export PATH=/scratch/hudson/pythons/${python_name}/bin:$PATH
