@@ -1,0 +1,47 @@
+#!/bin/sh
+################################################################################
+#  Copyright 2010-2011 CloudBees Inc.
+#
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
+#  You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
+################################################################################
+set +e
+
+. ./lib/build.sh
+
+redis_name=redis-$version-$(addon_architecture)
+
+is_built=$(addon_is_built redis/${redis_name}.zip)
+
+if [ $is_built == "1" ]; then
+    echo "$redis_name.tar.bz2 is already compiled and deployed"
+    exit 0
+else
+    set -e
+
+    mkdir build || rm -rf build/*
+
+    cd build
+
+    wget http://redis.googlecode.com/files/redis-${version}.tar.gz
+
+    tar xf redis-${version}.tar.gz
+
+    cd redis-${version}
+
+    make PREFIX=/scratch/jenkins/redis/${redis_name} install
+
+    rm -f ${redis_name}.zip
+    zip -r ${redis_name}.zip /scratch/hudson/redis/${redis_name}
+
+    addon_publish redis/${redis_name}.zip ${redis_name}.zip
+fi
