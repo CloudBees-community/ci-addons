@@ -1,0 +1,36 @@
+################################################################################
+#  Copyright 2010-2011 CloudBees Inc.
+#
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
+#  You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
+################################################################################
+# To call this script: 
+# export NODE_VERSION=0.7.8
+#  curl -s https://repository-cloudbees.forge.cloudbees.com/distributions/ci-addons/ruby/use-node | source /dev/stdin
+
+#set +x
+set -e
+
+if [[ -z $NODE_VERSION ]]; then
+   echo "You must set the NODE_VERSION environment variable. See http://wiki.cloudbees.com/bin/view/DEV/Node+Builds" 1>&2
+fi
+
+mkdir -p /scratch/hudson/nodes
+ARCH=`uname -m`
+
+node_name=node-${NODE_VERSION}-${ARCH}
+
+test -f /scratch/hudson/nodes/${node_name}.zip ||  wget -q -P /scratch/hudson/nodes https://repository-cloudbees.forge.cloudbees.com/distributions/ci-addons/node/${node_name}.zip > /dev/null
+
+test -f /scratch/hudson/nodes/${node_name}/bin/node || unzip -d /scratch/hudson/nodes /scratch/hudson/nodes/${node_name}.zip > /dev/null
+
+export PATH=/scratch/hudson/nodes/${node_name}/bin:$PATH

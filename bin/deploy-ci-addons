@@ -1,5 +1,6 @@
+#!/bin/sh
 ################################################################################
-#  Copyright 2010-2011 CloudBees Inc.
+#  Copyright 2012 CloudBees Inc.
 #
 #  Licensed under the Apache License, Version 2.0 (the "License");
 #  you may not use this file except in compliance with the License.
@@ -13,18 +14,15 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 ################################################################################
-# To call this script: 
-# curl -sk https://repository-cloudbees.forge.cloudbees.com/distributions/ci-addons/rvm/run-addon | bash
-# rvm reload
-# rvm use 1.9.2
+set -eu
 
-ROOT_WORKSPACE=/scratch/hudson/workspace
-RVM_HOME=${ROOT_WORKSPACE}/rvm
+# Deploys the "use-" scripts
+BASEDIR=$(dirname $0)/..
+. ${BASEDIR}/lib/build.sh
 
-echo "rvm_install_on_use_flag=1" >  ~/.rvmrc
-echo 'rvm_make_flags="-j 3"'     >> ~/.rvmrc
-echo "rvm_path=${RVM_HOME}"      >> ~/.rvmrc
+for ADDON in ruby
+do
+  echo Deploying ${ADDON}
 
-rvm reload
-
-echo 'Please ensure you run "rvm reload"'
+  addon_publish "${ADDON}/use-${ADDON}" "addons/${ADDON}/use-${ADDON}"
+done

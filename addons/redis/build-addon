@@ -1,0 +1,31 @@
+set +e
+
+redis_name=redis-$version-$(uname -m)
+
+wget --spider -v https://repository-cloudbees.forge.cloudbees.com/distributions/ci-addons/redis/$redis_name.zip
+if [ $? == 0 ]; then
+    set -e
+    echo "${redis_name}.tar.bz2 is already compiled and deployed"
+else
+    set -e
+
+    mkdir build || rm -rf build/*
+
+    cd build
+
+    wget http://redis.googlecode.com/files/#{redis_name}.tar.gz
+
+    tar xf #{redis_name}.tar.gz
+
+    cd #{redis_name}
+
+    ./configure --prefix /scratch/jenkins/redis/${redis_name}
+    make install
+
+    rm -f ${redis_name}.zip
+    zip -r ${redis_name}.zip /scratch/hudson/redis/${redis_name}
+
+    echo "Publishing redis"
+    cp -f /private/cbruby/cloudbees_deployer_netrc ~/.netrc
+    curl -n --upload-file redis*.zip https://repository-cloudbees.forge.cloudbees.com/distributions/ci-addons/redis/
+fi
