@@ -47,7 +47,7 @@ else
     done
 
     CONFIGURE_OPTS="${CONFIGURE_OPTS:-} --enable-load-relative" \
-      TMPDIR=$(pwd)/build \
+      TMPDIR=$(pwd) \
       ruby-build $version /scratch/jenkins/rubies/$ruby_name
 
 
