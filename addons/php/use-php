@@ -14,36 +14,7 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 ################################################################################
-set +e
 
-. ./lib/build.sh
+php_name=php-$version-$(addon_architecture)
 
-redis_name=redis-$version-$(addon_architecture)
-
-is_built=$(addon_is_built redis/${redis_name}.tar.bz2)
-
-if [ $is_built == "1" ]; then
-    echo "$redis_name.tar.bz2 is already compiled and deployed"
-    exit 0
-else
-    set -e
-
-    addon_clean_build
-    cd build
-
-    # Download
-    wget http://redis.googlecode.com/files/redis-${version}.tar.gz
-
-    # Unpack
-    tar xf redis-${version}.tar.gz
-
-    # Build
-    cd redis-${version}
-    make PREFIX=/scratch/jenkins/redis/${redis_name} install
-
-    # Package
-    addon_package "/scratch/hudson/redis/${redis_name}"
-
-    #Public
-    addon_publish redis/${redis_name}.tar.bz2 ${redis_name}.tar.bz2
-fi
+export PATH=/scratch/hudson/php/${php_name}/bin:$PATH

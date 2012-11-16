@@ -41,6 +41,18 @@ function addon_is_built {
   fi
 }
 
+function addon_package {
+  local ROOT=$1
+  local NAME=$(basename $ROOT)
+
+  log_debug "Packaging"
+  log_debug "  From: ${ROOT}"
+  log_debug "  To: ${NAME}"
+
+  rm -f ${NAME}.tar.bz2
+  tar cjf ${NAME}.tar.bz2 -C "$ROOT/.." ${NAME}
+}
+
 function addon_publish {
   local NAME=$1
   local SOURCE=$2
@@ -58,4 +70,16 @@ function addon_publish {
 function get_distribution_url {
   local NAME=$1
   echo "https://repository-cloudbees.forge.cloudbees.com/distributions/ci-addons/${NAME}"
+}
+
+
+function addon_clean_build {
+  log_debug "Checking build directory"
+  if [ -d build ]; then
+    log_debug "Removing build directory"
+    rm -rf build
+  fi
+
+  log_debug "Creating build directory"
+  mkdir build
 }

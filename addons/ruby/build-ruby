@@ -1,3 +1,4 @@
+#!/bin/sh
 ################################################################################
 #  Copyright 2010-2011 CloudBees Inc.
 #
@@ -23,7 +24,7 @@ unset BUNDLE_PATH
 
 ruby_name=ruby-$version-$(addon_architecture)
 
-is_built=$(addon_is_built ruby/${ruby_name}.zip)
+is_built=$(addon_is_built ruby/${ruby_name}.tar.bz2)
 
 if [ $is_built == "1" ]; then
     set -e
@@ -31,7 +32,8 @@ if [ $is_built == "1" ]; then
 else
     set -e
 
-    mkdir build || rm -rf build/*
+    addon_clean_build
+    cd build
 
     # Some of the older Ruby versions require an old OpenSSL
     openssl_versions=("ree-1.8.6-2009.06" "1.8.6-p240" "1.8.6-p383" "1.8.6-p420" "1.8.7-p249" "1.9.1-p378")
@@ -46,11 +48,10 @@ else
 
     CONFIGURE_OPTS="${CONFIGURE_OPTS:-} --enable-load-relative" \
       TMPDIR=$(pwd)/build \
-      ruby-build $version /scratch/hudson/rubies/$ruby_name
+      ruby-build $version /scratch/jenkins/rubies/$ruby_name
 
 
-    test -f $ruby_name.zip && rm $ruby_name.zip
-    zip -r $ruby_name.zip /scratch/hudson/rubies/$ruby_name
+    addon_package "/scratch/jenkins/rubies/${ruby_name}"
 
-    addon_publish ruby/${ruby_name}.zip ${ruby_name}.zip
+    addon_publish "ruby/${ruby_name}.tar.bz2" "${ruby_name}.tar.bz2"
 fi
