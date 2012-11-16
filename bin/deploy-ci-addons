@@ -20,7 +20,7 @@ set -eu
 BASEDIR=$(dirname $0)/..
 . ${BASEDIR}/lib/build.sh
 
-for ADDON in ruby
+for ADDON in ruby php redis
 do
   echo Deploying ${ADDON}
 

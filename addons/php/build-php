@@ -18,12 +18,12 @@ set +e
 
 . ./lib/build.sh
 
-redis_name=redis-$version-$(addon_architecture)
+php_name=php-$version-$(addon_architecture)
 
-is_built=$(addon_is_built redis/${redis_name}.zip)
+is_built=$(addon_is_built php/${php_name}.zip)
 
 if [ $is_built == "1" ]; then
-    echo "$redis_name.tar.bz2 is already compiled and deployed"
+    echo "$php_name.zip is already compiled and deployed"
     exit 0
 else
     set -e
@@ -33,19 +33,20 @@ else
     cd build
 
     # Download
-    wget http://redis.googlecode.com/files/redis-${version}.tar.gz
+    wget http://us3.php.net/distributions/php-${version}.tar.bz2
 
     # Unpack
-    tar xf redis-${version}.tar.gz
+    tar xjf php-${version}.tar.bz2
 
     # Build
-    cd redis-${version}
-    make PREFIX=/scratch/jenkins/redis/${redis_name} install
+    cd php-${version}
+    ./configure --prefix=/scratch/jenkins/php/${php_name}
+    make && make install
 
     # Package
-    rm -f ${redis_name}.zip
-    zip -r ${redis_name}.zip /scratch/hudson/redis/${redis_name}
+    rm -f ${php_name}.zip
+    zip -r ${php_name}.zip /scratch/hudson/php/${php_name}
 
-    #Public
-    addon_publish redis/${redis_name}.zip ${redis_name}.zip
+    #Publish
+    addon_publish php/${php_name}.zip ${php_name}.zip
 fi
