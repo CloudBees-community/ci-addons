@@ -1,0 +1,64 @@
+#!/bin/sh
+################################################################################
+#  Copyright 2010-2011 CloudBees Inc.
+#
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
+#  You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
+################################################################################
+set -e
+
+. ./lib/build.sh
+
+python_name=python-$version-$(addon_architecture)
+
+is_built=$(addon_is_built python/${python_name}.tar.bz2)
+
+if [ $is_built == "1" ]; then
+    echo "$python_name.tar.bz2 is already compiled and deployed"
+    exit 0
+else
+
+    addon_clean_build
+    cd build
+
+    # Download
+    wget http://www.python.org/ftp/python/${version}/Python-${version}.tgz
+
+    # Unpack
+    tar xf Python-${version}.tar.gz
+
+    # Build
+    cd Python-${version}
+    ./configure --prefix=/scratch/jenkins/python/$python_name
+    make clean && make && make install
+
+    export PATH=/scratch/jenkins/python/${python_name}/bin:$PATH
+
+    #install distribute
+    curl -O http://python-distribute.org/distribute_setup.py
+    python distribute_setup.py
+
+    # install pip
+    easy_install pip
+
+    #install virtualenv
+    pip install virtualenv
+
+
+    # Package
+    addon_package "/scratch/jenkins/python/${python_name}"
+
+    #Public
+    addon_publish python/${python_name}.tar.bz2 ${python_name}.tar.bz2
+fi
+
+
