@@ -25,7 +25,7 @@ if [[ -z $RUBY_VERSION ]]; then
    echo "You must set the RUBY_VERSION environment variable. See http://wiki.cloudbees.com/bin/view/DEV/Ruby+Builds" 1>&2
 fi
 
-mkdir -p /scratch/hudson/rubies
+mkdir -p /scratch/jenkins/ruby
 ARCH=`uname -m`
 
 ruby_name=ruby-${RUBY_VERSION}-${ARCH} #$(uname -p)
@@ -36,13 +36,12 @@ if [ ! -f /scratch/jenkins/ruby/${ruby_name}.tar.bz2 ]; then
              https://repository-cloudbees.forge.cloudbees.com/distributions/ci-addons/ruby/${ruby_name}.tar.bz2
 fi
 
-cd /scratch/jenkins/ruby
 if [ ! -f /scratch/jenkins/ruby/${ruby_name}/bin/ruby ]; then
-  tar xjf /scratch/jenkins/ruby/${ruby_name}.tar.bz2
+  tar xjf /scratch/jenkins/ruby/${ruby_name}.tar.bz2 -C /scratch/jenkins/ruby
 fi
 
 
-export PATH=/scratch/hudson/rubies/${ruby_name}/bin:$PATH
+export PATH=/scratch/jenkins/ruby/${ruby_name}/bin:$PATH
 
 unset GEM_PATH
 unset GEM_HOME
