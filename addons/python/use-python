@@ -1,3 +1,4 @@
+#!/bin/sh
 ################################################################################
 #  Copyright 2010-2011 CloudBees Inc.
 #
@@ -13,11 +14,9 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 ################################################################################
-# To call this script: 
-# export PYTHON_VERSION=2.7.2
-#  curl -s https://repository-cloudbees.forge.cloudbees.com/distributions/ci-addons/use-python | source /dev/stdin
-#set +x
-set -e
+# To call this script:
+# wget -q https://repository-cloudbees.forge.cloudbees.com/distributions/ci-addons/python/use-python
+# PYTHON_VERSION=2.7.2 . ./use-python
 
 if [[ -z $PYTHON_VERSION ]]; then
    echo "You must set the PYTHON_VERSION environment variable. See http://wiki.cloudbees.com/bin/view/DEV/Python+Builds" 1>&2

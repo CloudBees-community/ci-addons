@@ -1,3 +1,4 @@
+#!/bin/sh
 ################################################################################
 #  Copyright 2010-2011 CloudBees Inc.
 #
@@ -13,12 +14,9 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 ################################################################################
-# To call this script: 
-# export NODE_VERSION=0.7.8
-#  curl -s https://repository-cloudbees.forge.cloudbees.com/distributions/ci-addons/ruby/use-node | source /dev/stdin
-
-#set +x
-set -e
+# To call this script:
+# wget -q https://repository-cloudbees.forge.cloudbees.com/distributions/ci-addons/node/use-node
+# NODE_VERSION=0.7.8 . ./use-node
 
 if [[ -z $NODE_VERSION ]]; then
    echo "You must set the NODE_VERSION environment variable. See http://wiki.cloudbees.com/bin/view/DEV/Node+Builds" 1>&2

@@ -15,11 +15,8 @@
 #  limitations under the License.
 ################################################################################
 # To call this script:
-# export RUBY_VERSION=1.8.7-p352
-#  curl -s https://repository-cloudbees.forge.cloudbees.com/distributions/ci-addons/ruby/use-ruby | source /dev/stdin
-
-#set +x
-set -e
+# wget -q https://repository-cloudbees.forge.cloudbees.com/distributions/ci-addons/ruby/use-ruby
+# RUBY_VERSION=1.8.7-p352 . ./use-ruby
 
 if [[ -z $RUBY_VERSION ]]; then
    echo "You must set the RUBY_VERSION environment variable. See http://wiki.cloudbees.com/bin/view/DEV/Ruby+Builds" 1>&2

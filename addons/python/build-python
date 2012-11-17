@@ -34,18 +34,19 @@ else
     wget http://www.python.org/ftp/python/${version}/Python-${version}.tgz
 
     # Unpack
-    tar xf Python-${version}.tar.gz
+    tar xf Python-${version}.tgz
 
     # Build
+    PREFIX=/scratch/jenkins/python/$python_name
     cd Python-${version}
-    ./configure --prefix=/scratch/jenkins/python/$python_name
+    ./configure --prefix=$PREFIX
     make clean && make && make install
 
     export PATH=/scratch/jenkins/python/${python_name}/bin:$PATH
 
     #install distribute
     curl -O http://python-distribute.org/distribute_setup.py
-    python distribute_setup.py
+    python distribute_setup.py --prefix=$PREFIX
 
     # install pip
     easy_install pip
