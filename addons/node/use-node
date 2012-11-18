@@ -17,18 +17,19 @@
 # To call this script:
 # wget -q https://repository-cloudbees.forge.cloudbees.com/distributions/ci-addons/node/use-node
 # NODE_VERSION=0.7.8 . ./use-node
-
 if [[ -z $NODE_VERSION ]]; then
    echo "You must set the NODE_VERSION environment variable. See http://wiki.cloudbees.com/bin/view/DEV/Node+Builds" 1>&2
 fi
 
-mkdir -p /scratch/hudson/nodes
+set -e
+
+mkdir -p /scratch/jenkins/node
 ARCH=`uname -m`
 
 node_name=node-${NODE_VERSION}-${ARCH}
 
-test -f /scratch/hudson/nodes/${node_name}.zip ||  wget -q -P /scratch/hudson/nodes https://repository-cloudbees.forge.cloudbees.com/distributions/ci-addons/node/${node_name}.zip > /dev/null
+test -f /scratch/jenkins/node/${node_name}.tar.bz2 ||  wget -q -P /scratch/jenkins/node https://repository-cloudbees.forge.cloudbees.com/distributions/ci-addons/node/${node_name}.tar.bz2
 
-test -f /scratch/hudson/nodes/${node_name}/bin/node || unzip -d /scratch/hudson/nodes /scratch/hudson/nodes/${node_name}.zip > /dev/null
+test -f /scratch/jenkins/node/${node_name}/bin/node || tar xjf /scratch/jenkins/node/${node_name}.tar.bz2  -C /scratch/jenkins/node
 
-export PATH=/scratch/hudson/nodes/${node_name}/bin:$PATH
+export PATH=/scratch/jenkins/node/${node_name}/bin:$PATH

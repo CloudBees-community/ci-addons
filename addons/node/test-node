@@ -1,0 +1,45 @@
+#!/bin/sh
+################################################################################
+#  Copyright 2010-2011 CloudBees Inc.
+#
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
+#  You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
+################################################################################
+set -eu
+
+curl -s -o use-node https://repository-cloudbees.forge.cloudbees.com/distributions/ci-addons/node/use-node
+NODE_VERSION=$version . ./use-node
+
+output=$(node -v)
+
+if [[ $output == "v${version}" ]]; then
+  echo Match: $output
+else
+  echo No match: $output
+  exit 1
+fi
+
+
+npm --version
+npm install optimist
+
+# Call the console.log function.
+echo 'console.log("Hello World");' > hello-world.js
+
+output=$(node hello-world.js)
+
+if [[ $output == "Hello World" ]]; then
+  echo "Hello world worked"
+else
+  echo "Hello world failed output: ${output}"
+  exit 1
+fi
