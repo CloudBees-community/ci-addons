@@ -46,14 +46,20 @@ else
 
     #install distribute
     curl -O http://python-distribute.org/distribute_setup.py
-    python distribute_setup.py --prefix=$PREFIX
+    regex="3.*"
+    if [[ ${version} == ${regex} ]]; then
+      echo Using python3
+      python3 distribute_setup.py
+    else
+      echo Using python
+      python distribute_setup.py
+    fi
 
     # install pip
     easy_install pip
 
     #install virtualenv
     pip install virtualenv
-
 
     # Package
     addon_package "/scratch/jenkins/python/${python_name}"

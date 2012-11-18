@@ -20,7 +20,13 @@ wget -q https://repository-cloudbees.forge.cloudbees.com/distributions/ci-addons
 PYTHON_VERSION=${version} . ./use-python
 
 regex="Python ${version}"
-output=$(python -V)
+
+if [[ $version == "3.*" ]]; then
+  output=$(python3 -V)
+else
+  output=$(python -V)
+fi
+
 if [[ $output == $regex ]]; then
   echo Match: $output
   exit 0

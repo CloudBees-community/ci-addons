@@ -32,9 +32,8 @@ if [ ! -f /scratch/jenkins/redis/${redis_name}.tar.bz2 ]; then
              https://repository-cloudbees.forge.cloudbees.com/distributions/ci-addons/redis/${redis_name}.tar.bz2
 fi
 
-cd /scratch/jenkins/redis
 if [ ! -f /scratch/jenkins/redis/${redis_name}/bin/redis-server ]; then
-  tar xjf /scratch/jenkins/redis/${redis_name}.tar.bz2
+  tar xjf /scratch/jenkins/redis/${redis_name}.tar.bz2 -C /scratch/jenkins/redis
 fi
 
 export PATH=/scratch/jenkins/redis/${redis_name}/bin:$PATH

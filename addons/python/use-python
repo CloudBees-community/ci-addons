@@ -22,13 +22,19 @@ if [[ -z $PYTHON_VERSION ]]; then
    echo "You must set the PYTHON_VERSION environment variable. See http://wiki.cloudbees.com/bin/view/DEV/Python+Builds" 1>&2
 fi
 
-mkdir -p /scratch/hudson/pythons
+mkdir -p /scratch/jenkins/python
 ARCH=`uname -m`
 
 python_name=python-${PYTHON_VERSION}-${ARCH} #$(uname -p)
 
-test -f /scratch/hudson/pythons/${python_name}.zip ||  wget -q -P /scratch/hudson/pythons https://repository-cloudbees.forge.cloudbees.com/distributions/ci-addons/python/${python_name}.zip > /dev/null
+if [ ! -f /scratch/jenkins/python/${python_name}.tar.bz2 ]; then
+  wget -q -P /scratch/jenkins/python \
+    https://repository-cloudbees.forge.cloudbees.com/distributions/ci-addons/python/${python_name}.tar.bz2
+fi
 
-test -f /scratch/hudson/pythons/${python_name}/bin/python || unzip -d / /scratch/hudson/pythons/${python_name}.zip > /dev/null
+# python changes names per major version, so look for pip
+if [ ! -f /scratch/jenkins/python/${python_name}/bin/pip ]; then
+  tar xjf /scratch/jenkins/python/${python_name}.tar.bz2 -C /scratch/jenkins/python
+fi
 
-export PATH=/scratch/hudson/pythons/${python_name}/bin:$PATH
+export PATH=/scratch/jenkins/python/${python_name}/bin:$PATH
