@@ -13,8 +13,9 @@
 #  See the License for the specific language governing permissions and
 #  limitations under the License.
 ################################################################################
-# To call this script: 
-#   bash < <(curl -s https://repository-cloudbees.forge.cloudbees.com/distributions/ci-addons/postgresql/run-addon)
+# To call this script:
+#   wget -q https://repository-cloudbees.forge.cloudbees.com/distributions/ci-addons/postgresql/use-postgresql
+#  POSTGRESQL_VERSION=9.2.1 . ./use-postgresql
 
 set -eu
 
@@ -24,7 +25,7 @@ if [[ -z ${POSTGRESQL_VERSION:-} ]]; then
 fi
 
 VERSION=0.2
-PGVERSION=${POSTGRESQL_VERSION:-9.0.4}
+PGVERSION=${POSTGRESQL_VERSION:-9.2.1}
 ARCH=`uname -m`
 PGNAME=postgresql-${PGVERSION}-${ARCH}
 PGHOME=/scratch/hudson/postgresqls/${PGNAME}
@@ -43,7 +44,7 @@ if [ ! -f $PGHOME/bin/psql ];then
   CI_URL="https://repository-cloudbees.forge.cloudbees.com/distributions/ci-addons"
   FILE=postgresql-${PGVERSION}-${ARCH}.tar.bz2
   echo "# Installing PostgreSQL to ${PGHOME}"
-  wget -P /tmp ${CI_URL}/postgresql/${FILE} 
+  wget -P /tmp ${CI_URL}/postgresql/${FILE}
   mkdir -p $PGHOME
   tar xjf /tmp/${FILE} -C ${PGHOME} --strip-components 1
 fi
@@ -70,7 +71,7 @@ else
   echo "# Using database in ${PGDATA}"
 fi
 
-if [ -f ${PGDATA}/postmaster.pid ]; then 
+if [ -f ${PGDATA}/postmaster.pid ]; then
   echo "# Using existing PostgreSQL engine"
 else
   echo "# Starting new PostgreSQL engine"
