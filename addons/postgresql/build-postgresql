@@ -20,7 +20,7 @@ set +e
 
 postgresql_name=postgresql-$version-$(addon_architecture)
 
-is_built=$(addon_is_built postgresql/${postgresql_name}.tar.bz2)
+is_built=$(addon_is_built postgresql/fc17/${postgresql_name}.tar.bz2)
 
 if [ $is_built == "1" ]; then
     echo "$postgresql_name.tar.bz2 is already compiled and deployed"
@@ -50,7 +50,7 @@ else
     addon_package "/scratch/jenkins/postgresql/${postgresql_name}"
 
     #Public
-    addon_publish postgresql/${postgresql_name}.tar.bz2 ${postgresql_name}.tar.bz2
+    addon_publish postgresql/fc17/${postgresql_name}.tar.bz2 ${postgresql_name}.tar.bz2
 fi
 
 
