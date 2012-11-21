@@ -83,3 +83,7 @@ function addon_clean_build {
   log_debug "Creating build directory"
   mkdir build
 }
+
+function addon_platform {
+  echo arch
+}
