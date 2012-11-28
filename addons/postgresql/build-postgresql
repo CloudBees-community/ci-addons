@@ -40,7 +40,7 @@ else
     # Build
     mkdir -p /scratch/jenkins/postgresql/${postgresql_name}
     cd postgresql-${version}
-    ./configure --prefix=/scratch/jenkins/${postgresql_name}
+    ./configure --prefix=/scratch/jenkins/${postgresql_name}  --without-readline
     make && make install
     # Required for contrib package DBLink
     make -C src/backend ../../src/include/utils/fmgroids.h
