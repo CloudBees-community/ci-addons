@@ -37,8 +37,8 @@ else
     cd build
 
     CONFIGURE_OPTS=--with-openssl-dir=/usr \
-                   --with-readline-dir=/usr \
-                   --with-zlib-dir=/usr \
+                   --with-out-ext=readline
+                  --with-zlib-dir=/usr \
                    --disable-option-checking
 
     # Some of the older Ruby versions require an old OpenSSL
