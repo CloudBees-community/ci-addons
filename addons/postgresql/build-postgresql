@@ -39,7 +39,7 @@ else
 
     # Build
     mkdir -p /scratch/jenkins/postgresql/${postgresql_name}
-    cd /scratch/jenkins/postgresql/${postgresql_name}
+    cd postgresql-${version}
     ./configure --prefix=/scratch/jenkins/${postgresql_name}
     make && make install
     # Required for contrib package DBLink
