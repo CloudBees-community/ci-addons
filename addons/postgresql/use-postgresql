@@ -44,7 +44,7 @@ if [ ! -f $PGHOME/bin/psql ];then
   CI_URL="https://repository-cloudbees.forge.cloudbees.com/distributions/ci-addons"
   FILE=postgresql-${PGVERSION}-${ARCH}.tar.bz2
   echo "# Installing PostgreSQL to ${PGHOME}"
-  wget -P /tmp ${CI_URL}/postgresql/${FILE}
+  wget -P /tmp ${CI_URL}/postgresql/fc17/${FILE}
   mkdir -p $PGHOME
   tar xjf /tmp/${FILE} -C ${PGHOME} --strip-components 1
 fi
