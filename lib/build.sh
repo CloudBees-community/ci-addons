@@ -85,5 +85,9 @@ function addon_clean_build {
 }
 
 function addon_platform {
-  echo arch
+  if [ -f /etc/redhat-release ]; then
+      echo fc17
+  else
+      echo arch
+  fi
 }
