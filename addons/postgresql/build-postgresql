@@ -38,7 +38,7 @@ else
     tar xjf postgresql-${version}.tar.bz2
 
     # Build
-    mkdir /scratch/jenkins/postgresql/${postgresql_name}
+    mkdir -p /scratch/jenkins/postgresql/${postgresql_name}
     cd ${postgresql_name}
     ./configure --prefix=/scratch/jenkins/${postgresql_name}
     make && make install
