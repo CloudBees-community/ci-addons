@@ -49,7 +49,7 @@ else
         test -f ${OPENSSL}.tar.gz || wget http://www.openssl.org/source/${OPENSSL}.tar.gz
         test -d ${OPENSSL} || tar xzf ${OPENSSL}.tar.gz
         CONFIGURE_OPTS=--with-openssl-dir=`pwd`/${OPENSSL} \
-                       --with-readline-dir=/usr \
+	              --with-out-ext=readline
                        --with-zlib-dir=/usr \
                        --disable-option-checking
       fi
