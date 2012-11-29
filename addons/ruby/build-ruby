@@ -33,6 +33,13 @@ if [ $is_built == "1" ]; then
 else
     set -e
 
+    ruby_versions=("1.8.7-p370")
+    for i in ${ruby_versions[@]}; do
+      echo Patching: ${i}
+      echo     File: ruby-build/share/ruby-build/$i
+      curl https://gist.github.com/gists/4166844/download >> ruby-build/share/ruby-build/$i
+    done
+
     addon_clean_build
     cd build
 
@@ -54,6 +61,7 @@ else
                        --disable-option-checking"
       fi
     done
+
 
     CONFIGURE_OPTS="${CONFIGURE_OPTS:-} --enable-load-relative" \
       TMPDIR=$(pwd) \
