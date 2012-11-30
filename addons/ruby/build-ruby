@@ -37,7 +37,7 @@ else
     for i in ${ruby_versions[@]}; do
       echo Patching: ${i}
       echo     File: ruby-build/share/ruby-build/$i
-      curl https://gist.github.com/gists/4166844/download >> ${CUSTOM_TOOLS}/ruby_build/ruby-build/share/ruby-build/$i
+      curl https://raw.github.com/gist/4166844/ >> ${CUSTOM_TOOLS}/ruby_build/ruby-build/share/ruby-build/$i
 
     done
 
