@@ -26,3 +26,5 @@ do
 
   addon_publish "${ADDON}/use-${ADDON}" "addons/${ADDON}/use-${ADDON}"
 done
+
+addon_publish "lib/use.sh" "addons/lib/use.sh"

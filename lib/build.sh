@@ -22,6 +22,24 @@ function addon_architecture {
   uname -m
 }
 
+function addon_platform {
+  issue=$(cat /etc/issue | head -n 1)
+
+  fedora_regex="Fedora release 17*"
+  if [[ $issue == $fedora_regex ]]; then
+      echo fc17
+      return
+  fi
+
+  arch_regex="Arch Linux*"
+  if [[ $issue == $arch_regex ]]; then
+      echo arch
+      return
+  fi
+  log_debug "Unknown platform: /etc/issue: $issue"
+  #exit 1
+}
+
 # Usage:
 #   is_already_built 'ruby/ruby-1.3.2-i386.zip'
 function addon_is_built {

@@ -22,15 +22,20 @@ if [[ -z $RUBY_VERSION ]]; then
    echo "You must set the RUBY_VERSION environment variable. See http://wiki.cloudbees.com/bin/view/DEV/Ruby+Builds" 1>&2
 fi
 
+# Grab our library file
+if [ ! -f /scratch/jenkins/use.sh ]; then
+  wget -q -P /scratch/jenkins https://repository-cloudbees.forge.cloudbees.com/distributions/ci-addons/lib/use.sh
+fi
+. /scratch/jenkins/use.sh
+
+
 mkdir -p /scratch/jenkins/ruby
-ARCH=`uname -m`
 
-ruby_name=ruby-${RUBY_VERSION}-${ARCH} #$(uname -p)
-
+ruby_name=ruby-${RUBY_VERSION}-$(addon_architecture)
 
 if [ ! -f /scratch/jenkins/ruby/${ruby_name}.tar.bz2 ]; then
   wget -q -P /scratch/jenkins/ruby \
-             https://repository-cloudbees.forge.cloudbees.com/distributions/ci-addons/ruby/${ruby_name}.tar.bz2
+             https://repository-cloudbees.forge.cloudbees.com/distributions/ci-addons/ruby/$(addon_platform)/${ruby_name}.tar.bz2
 fi
 
 if [ ! -f /scratch/jenkins/ruby/${ruby_name}/bin/ruby ]; then
