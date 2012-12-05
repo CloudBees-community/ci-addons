@@ -52,10 +52,20 @@ function addon_is_built {
   wget --spider -q $URL
   if [ $? == 0 ]; then
     log_debug "${NAME} exists"
-    echo "1"
   else
     log_debug "${NAME} does not exist"
     echo "0"
+    return
+  fi
+
+  # Now we check for a "rebuild" file which tells us to rebuild the package
+  wget --spider -q $URL.rebuild
+  if [ $? == 0 ]; then
+    log_debug "${NAME} rebuild file exists"
+    echo "0"
+  else
+    log_debug "${NAME} does not exist"
+    echo "1"
   fi
 }
 
@@ -83,6 +93,20 @@ function addon_publish {
   #XXX would be better if this wasn't hardcoded to a specific account
   cp -f /private/cbruby/cloudbees_deployer_netrc ~/.netrc
   curl -n --upload-file ${SOURCE} ${URL}
+
+  addon_remove_rebuild_file ${NAME}
+}
+
+function addon_remove_rebuild_file {
+  local NAME=$1
+  local URL=$(get_distribution_url $NAME).rebuild
+
+  log_debug "Removing: ${URL}"
+
+  #XXX would be better if this wasn't hardcoded to a specific account
+  cp -f /private/cbruby/cloudbees_deployer_netrc ~/.netrc
+  # For now, we'll ignore errors (e.g. a 404)
+  curl -q -X DELETE ${URL}
 }
 
 function get_distribution_url {
