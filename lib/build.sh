@@ -106,7 +106,7 @@ function addon_remove_rebuild_file {
   #XXX would be better if this wasn't hardcoded to a specific account
   cp -f /private/cbruby/cloudbees_deployer_netrc ~/.netrc
   # For now, we'll ignore errors (e.g. a 404)
-  curl -q -X DELETE ${URL}
+  curl -n -q -X DELETE ${URL}
 }
 
 function get_distribution_url {
