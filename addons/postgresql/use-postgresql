@@ -24,6 +24,12 @@ if [[ -z ${POSTGRESQL_VERSION:-} ]]; then
    exit 1
 fi
 
+# Grab our library file
+if [ ! -f /scratch/jenkins/use.sh ]; then
+  wget -q -P /scratch/jenkins https://repository-cloudbees.forge.cloudbees.com/distributions/ci-addons/lib/use.sh
+fi
+. /scratch/jenkins/use.sh
+
 VERSION=0.2
 PGVERSION=${POSTGRESQL_VERSION:-9.2.1}
 ARCH=`uname -m`
