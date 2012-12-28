@@ -46,17 +46,6 @@ else
 
     CONFIGURE_OPTS="--with-openssl-dir=/usr"
 
-    # Some of the older Ruby versions require an old OpenSSL
-    openssl_versions=("ree-1.8.6-2009.06" "1.8.6-p240" "1.8.6-p383" "1.8.6-p420" "1.8.7-p249" "1.9.1-p378")
-    for i in ${openssl_versions[@]}; do
-      OPENSSL=openssl-0.9.8t
-      if [ "$i" = "$version" ]; then
-        test -f ${OPENSSL}.tar.gz || wget http://www.openssl.org/source/${OPENSSL}.tar.gz
-        test -d ${OPENSSL} || tar xzf ${OPENSSL}.tar.gz
-        CONFIGURE_OPTS="--with-openssl-dir=`pwd`/${OPENSSL}"
-      fi
-    done
-
     CONFIGURE_OPTS="${CONFIGURE_OPTS:-} \
                     --disable-option-checking \
                     --with-zlib-dir=/usr \
