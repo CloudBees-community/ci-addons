@@ -1,5 +1,5 @@
 ################################################################################
-#  Copyright 2010-2011 CloudBees Inc.
+#  Copyright 2013 CloudBees Inc.
 #
 #  Licensed under the Apache License, Version 2.0 (the "License");
 #  you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
 ################################################################################
 # To call this script:
 #   wget -q https://repository-cloudbees.forge.cloudbees.com/distributions/ci-addons/postgresql/use-postgresql
-#  POSTGRESQL_VERSION=9.2.1 . ./use-postgresql
+#  POSTGRESQL_VERSION=9.2.4 . ./use-postgresql
 
 set -eu
 

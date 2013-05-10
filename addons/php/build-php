@@ -32,7 +32,12 @@ else
     cd build
 
     # Download
-    wget http://us3.php.net/distributions/php-${version}.tar.bz2
+    regex="*(RC|alpha|beta)*"
+    if [[ $version == $regex ]]; then
+        wget http://downloads.php.net/dsp/php-${version}.tar.bz2
+    else
+        wget http://us3.php.net/distributions/php-${version}.tar.bz2
+    fi
 
     # Unpack
     tar xjf php-${version}.tar.bz2
