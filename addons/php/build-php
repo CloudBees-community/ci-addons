@@ -44,7 +44,8 @@ else
 
     # Build
     cd php-${version}
-    ./configure --prefix=/scratch/jenkins/php/${php_name}
+    ./configure --prefix=/scratch/jenkins/php/${php_name} \
+        --with-curl
     make && make install
 
     # Package
