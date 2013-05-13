@@ -19,8 +19,9 @@ set +e
 . ./lib/build.sh
 
 php_name=php-$version-$(addon_architecture)
+platform=$(addon_platform)
 
-is_built=$(addon_is_built php/${php_name}.tar.bz2)
+is_built=$(addon_is_built php/${platform}/${php_name}.tar.bz2)
 
 if [ $is_built == "1" ]; then
     echo "$php_name.tar.bz2 is already compiled and deployed"
@@ -52,5 +53,5 @@ else
     addon_package "/scratch/jenkins/php/${php_name}"
 
     #Publish
-    addon_publish php/${php_name}.tar.bz2 ${php_name}.tar.bz2
+    addon_publish "php/${platform}/${php_name}.tar.bz2" "${php_name}.tar.bz2"
 fi
