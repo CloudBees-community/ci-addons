@@ -18,6 +18,11 @@ function log_debug {
   echo "DEBUG: $*" > /dev/stderr
 }
 
+function get_distribution_url {
+  local NAME=$1
+  echo "https://repository-cloudbees.forge.cloudbees.com/distributions/ci-addons/${NAME}"
+}
+
 function addon_architecture {
   uname -m
 }
@@ -37,5 +42,34 @@ function addon_platform {
       return
   fi
   log_debug "Unknown platform: /etc/issue: $issue"
-  #exit 1
+  exit 1
 }
+
+# PACKAGE: <package>
+# NAME: <package>-<version>.tar.bz2
+function addon_download {
+  local PACKAGE=$1
+  local NAME=$2
+  local FQNAME="$PACKAGE/$(addon_platform)/$NAME.tar.bz2"
+
+  if [ ! -f "/tmp/${NAME}.tar.bz2" ]; then
+    wget -P /tmp $(get_distribution_url "${FQNAME}")
+  fi
+}
+
+# PACKAGE: <package>
+# NAME: <package>-<version>.tar.bz2
+# TEST: bin/php (for example)
+function addon_extract {
+  local PACKAGE=$1
+  local NAME=$2
+  local TEST=$3
+  local FILE="/tmp/${NAME}.tar.bz2"
+  local TARGET="/scratch/jenkins/${PACKAGE}/${NAME}"
+
+  if [ ! -f "${TARGET}/${TEST}" ]; then
+    mkdir -p ${TARGET}
+    tar xjf ${FILE} -C ${TARGET} --strip-components 1
+  fi
+}
+

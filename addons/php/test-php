@@ -16,8 +16,10 @@
 ################################################################################
 
 set -eu
-wget -q https://repository-cloudbees.forge.cloudbees.com/distributions/ci-addons/php/use-php
-PHP_VERSION=${version} . ./use-php
+wget -q https://repository-cloudbees.forge.cloudbees.com/distributions/ci-addons/php/use-php-rc
+PHP_VERSION=${version} . ./use-php-rc
+
+php -v
 
 regex="PHP *${version}*cli*"
 output=$(php -v)

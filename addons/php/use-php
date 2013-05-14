@@ -16,25 +16,25 @@
 ################################################################################
 # To call this script:
 #  wget -q https://repository-cloudbees.forge.cloudbees.com/distributions/ci-addons/php/use-php
-#  PHP_VERSION=5.4.8 . use-php
+#  PHP_VERSION=5.4.13 . use-php
+
+set -eu
 
 if [[ -z $PHP_VERSION ]]; then
    echo "You must set the PHP_VERSION environment variable. See http://wiki.cloudbees.com/bin/view/DEV/PHP" 1>&2
+   exit 1
 fi
 
-mkdir -p /scratch/jenkins/php
-ARCH=`uname -m`
-
-php_name=php-${PHP_VERSION}-${ARCH} #$(uname -p)
-
-if [ ! -f /scratch/jenkins/php/${php_name}.tar.bz2 ]; then
-  wget -q -P /scratch/jenkins/php \
-             https://repository-cloudbees.forge.cloudbees.com/distributions/ci-addons/php/${php_name}.tar.bz2
+# Grab our library file
+if [ ! -f /scratch/jenkins/use.sh ]; then
+  wget -q -P /scratch/jenkins https://repository-cloudbees.forge.cloudbees.com/distributions/ci-addons/lib/use.sh
 fi
+. /scratch/jenkins/use.sh
 
-cd /scratch/jenkins/php
-if [ ! -f /scratch/jenkins/php/${php_name}/bin/php ]; then
-  tar xjf /scratch/jenkins/php/${php_name}.tar.bz2
-fi
+php_name=php-${PHP_VERSION}-$(addon_architecture) #$(uname -p)
+
+addon_download "php" "${php_name}"
+
+addon_extract "php" "${php_name}" "bin/php"
 
 export PATH=/scratch/jenkins/php/${php_name}/bin:$PATH
