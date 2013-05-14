@@ -53,7 +53,7 @@ function addon_download {
   local FQNAME="$PACKAGE/$(addon_platform)/$NAME.tar.bz2"
 
   if [ ! -f "/tmp/${NAME}.tar.bz2" ]; then
-    wget -P /tmp $(get_distribution_url "${FQNAME}")
+    wget -nv -P /tmp $(get_distribution_url "${FQNAME}")
   fi
 }
 
