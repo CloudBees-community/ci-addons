@@ -6,7 +6,7 @@ BASE=/opt/shards/shard02/data/cloudbees/scm-dav/distributions/ci-addons
 #VERSION=`cat $1/version`
 
 echo Deploying addon scripts
-CMD="scp addons/$ADDON/use-$ADDON ${USERHOST}:$BASE/addons/$ADDON/use-${ADDON}-rc"
+CMD="scp addons/$ADDON/use-$ADDON ${USERHOST}:$BASE/$ADDON/use-${ADDON}"
 echo $CMD
 $CMD
 echo Available at https://repository-cloudbees.forge.cloudbees.com/distributions/ci-addons/use-${ADDON}
