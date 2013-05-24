@@ -55,7 +55,7 @@ else
     fi
 
     # Common options (none!)
-    CONFIGURE_OPTS="${CONFIGURE_OPTS:-}
+    CONFIGURE_OPTS="${CONFIGURE_OPTS:-}"
 
     TMPDIR=$(pwd) \
     CONFIGURE_OPTS=${CONFIGURE_OPTS} \
