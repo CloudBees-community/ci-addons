@@ -44,7 +44,11 @@ else
     addon_clean_build
     cd build
 
-    CONFIGURE_OPTS="--with-openssl-dir=/usr"
+    if [ $version == "ree-1.8.7-2012.02" ]; then
+        CONFIGURE_OPTS=""
+    else
+        CONFIGURE_OPTS="--with-openssl-dir=/usr"
+    fi
 
     CONFIGURE_OPTS="${CONFIGURE_OPTS:-} \
                     --disable-option-checking \
