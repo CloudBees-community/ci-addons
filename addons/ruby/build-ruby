@@ -47,11 +47,12 @@ else
     if [ $version == "ree-1.8.7-2012.02" ]; then
         CONFIGURE_OPTS=""
     else
-        CONFIGURE_OPTS="--with-openssl-dir=/usr"
+        CONFIGURE_OPTS="--with-openssl-dir=/usr \
+                        --disable-option-checking \
+                       "
     fi
 
     CONFIGURE_OPTS="${CONFIGURE_OPTS:-} \
-                    --disable-option-checking \
                     --with-zlib-dir=/usr \
                     --enable-load-relative"
 
