@@ -49,12 +49,13 @@ else
     else
         CONFIGURE_OPTS="--with-openssl-dir=/usr \
                         --with-zlib-dir=/usr \
+                        --enable-load-relative \
                         --disable-option-checking \
                        "
     fi
 
-    CONFIGURE_OPTS="${CONFIGURE_OPTS:-} \
-                    --enable-load-relative"
+    # Common options (none!)
+    CONFIGURE_OPTS="${CONFIGURE_OPTS:-}
 
     TMPDIR=$(pwd) \
     CONFIGURE_OPTS=${CONFIGURE_OPTS} \
