@@ -18,7 +18,7 @@ set -eu
 wget -q https://repository-cloudbees.forge.cloudbees.com/distributions/ci-addons/ruby/use-ruby
 RUBY_VERSION=${version} . ./use-ruby
 
-simpleversion=$(echo $version | sed s/-?//g)
+simpleversion=$(echo $version | sed s/-//g)
 echo "Looking for ${simpleversion}"
 regex="ruby *${simpleversion}*"
 echo "Looking using ${regex}"
