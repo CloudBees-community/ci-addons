@@ -18,13 +18,16 @@ set -eu
 wget -q https://repository-cloudbees.forge.cloudbees.com/distributions/ci-addons/ruby/use-ruby
 RUBY_VERSION=${version} . ./use-ruby
 
-simpleversion=$(echo $version | sed s/-//g)
+simpleversion=$(echo $version | sed s/-?//g)
 regex="ruby *${simpleversion}*"
 output=$(ruby -v)
 if [[ $output == $regex ]]; then
   echo Match: $output
-  exit 0
 else
   echo No match: $output
   exit 1
 fi
+
+# This has had problems in the past
+gem install bcrypt-ruby
+
