@@ -19,8 +19,11 @@ wget -q https://repository-cloudbees.forge.cloudbees.com/distributions/ci-addons
 RUBY_VERSION=${version} . ./use-ruby
 
 simpleversion=$(echo $version | sed s/-?//g)
+echo "Looking for ${simpleversion}"
 regex="ruby *${simpleversion}*"
+echo "Looking using ${regex}"
 output=$(ruby -v)
+echo "Checking against ${output}"
 if [[ $output == $regex ]]; then
   echo Match: $output
 else
