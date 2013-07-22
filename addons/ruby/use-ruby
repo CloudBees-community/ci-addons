@@ -24,34 +24,35 @@ fi
 
 ruby187="1.8.7-*"
 if [[ $RUBY_VERSION == $ruby187 ]]; then
-  echo "Ruby 1.8.7 has difficulties compiling on modern operating systems due to compiler changes."
-  echo "As a result we have disabled these versions."
-  echo "Please contact support if you have a dire need for them."
+  echo "Ruby 1.8.7 is EOL - it is no longer supported by our build system."
   exit 1
 fi
 
+BASE=/scratch/jenkins/addons
+mkdir -p ${BASE}
+
 # Grab our library file
-if [ ! -f /scratch/jenkins/use.sh ]; then
-  wget -q -P /scratch/jenkins https://repository-cloudbees.forge.cloudbees.com/distributions/ci-addons/lib/use.sh
+if [ ! -f ${BASE}/use.sh ]; then
+  wget -q -P ${BASE} https://repository-cloudbees.forge.cloudbees.com/distributions/ci-addons/lib/use.sh
 fi
-. /scratch/jenkins/use.sh
+. ${BASE}/use.sh
 
 
-mkdir -p /scratch/jenkins/ruby
+mkdir -p ${BASE}/ruby
 
 ruby_name=ruby-${RUBY_VERSION}-$(addon_architecture)
 
-if [ ! -f /scratch/jenkins/ruby/${ruby_name}.tar.bz2 ]; then
-  wget -q -P /scratch/jenkins/ruby \
+if [ ! -f ${BASE}/ruby/${ruby_name}.tar.bz2 ]; then
+  wget -q -P ${BASE}/ruby \
              https://repository-cloudbees.forge.cloudbees.com/distributions/ci-addons/ruby/$(addon_platform)/${ruby_name}.tar.bz2
 fi
 
-if [ ! -f /scratch/jenkins/ruby/${ruby_name}/bin/ruby ]; then
-  tar xjf /scratch/jenkins/ruby/${ruby_name}.tar.bz2 -C /scratch/jenkins/ruby
+if [ ! -f ${BASE}/ruby/${ruby_name}/bin/ruby ]; then
+  tar xjf ${BASE}/ruby/${ruby_name}.tar.bz2 -C ${BASE}/ruby
 fi
 
-
-export PATH=/scratch/jenkins/ruby/${ruby_name}/bin:$PATH
+export RUBY_HOME=${BASE}/ruby/${ruby_name}
+export PATH=${BASE}/ruby/${ruby_name}/bin:$PATH
 
 unset GEM_PATH
 unset GEM_HOME
