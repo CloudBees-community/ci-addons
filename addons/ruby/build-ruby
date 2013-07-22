@@ -53,8 +53,7 @@ else
     CONFIGURE_OPTS=${CONFIGURE_OPTS} \
     ruby-build $version /scratch/jenkins/addons/ruby/$ruby_name
 
-
     addon_package "/scratch/jenkins/addons/ruby/${ruby_name}"
 
-    addon_publish "addons/ruby/${platform}/${ruby_name}.tar.bz2" "${ruby_name}.tar.bz2"
+    addon_publish "ruby/${platform}/${ruby_name}.tar.bz2" "${ruby_name}.tar.bz2"
 fi
