@@ -46,7 +46,7 @@ else
     # Build
     cd php-${version}
     ./configure --prefix=/scratch/jenkins/php/${php_name} \
-        --with-curl
+        --with-curl --with-openssl /usr/bin/openssl 
     make && make install
 
     # Package
