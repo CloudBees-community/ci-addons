@@ -39,10 +39,10 @@ else
 
   # Build
   cd node-v${version}
-  INSTALL_DIR=/scratch/jenkins/node/${node_name}
+  INSTALL_DIR=/scratch/jenkins/addons/node/${node_name}
   npm_config_prefix=$INSTALL_DIR
   # The --without-snapshot is required to build 0.7 series on the GCC 4.7-pre build we have on FC
-  ./configure --prefix=/scratch/jenkins/node/${node_name} --without-snapshot
+  ./configure --prefix=${npm_config_prefix} --without-snapshot
   make
   make install
 
