@@ -50,8 +50,8 @@ else
 
   curl https://npmjs.org/install.sh | clean=yes sh
 
-  addon_package "/scratch/jenkins/node/${node_name}"
+  addon_package "/scratch/jenkins/addons/node/${node_name}"
 
   #Publish
-  addon_publish node/${node_name}.tar.bz2 ${node_name}.tar.bz2
+  addon_publish "node/${node_name}.tar.bz2" "${node_name}.tar.bz2"
 fi
