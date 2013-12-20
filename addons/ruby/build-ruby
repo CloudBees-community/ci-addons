@@ -33,6 +33,21 @@ if [ $is_built == "1" ]; then
 else
     set -e
 
+    # Jenkins custom tools are unreliable; better to control everything here.
+    if [ -d ruby-build ]; then
+        pushd ruby-build
+        git fetch
+        git reset --hard origin/master
+        popd
+    else
+        git clone https://github.com/sstephenson/ruby-build.git
+    fi
+
+    pushd ruby-build
+    PREFIX=/tmp/ruby-build ./install.sh
+    export PATH=/tmp/ruby-build/bin:$PATH
+    popd
+
     addon_clean_build
     cd build
 
