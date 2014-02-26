@@ -48,7 +48,7 @@ else
 
   export PATH=$INSTALL_DIR/bin:$PATH
 
-  curl https://npmjs.org/install.sh | clean=yes sh
+  curl https://www.npmjs.org/install.sh | clean=yes sh
 
   addon_package "/scratch/jenkins/addons/node/${node_name}"
 
