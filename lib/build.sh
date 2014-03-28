@@ -23,19 +23,25 @@ function addon_architecture {
 }
 
 function addon_platform {
-  issue=$(cat /etc/issue | head -n 1)
+  uname=$(uname -a)
+  osx_regex="Darwin *"
+  if [[ $uname == $osx_regex ]]; then
+    echo osx
+    return
+  fi
 
-  fedora_regex="Fedora release 17*"
-  if [[ $issue == $fedora_regex ]]; then
+  if [ -f /etc/redhat-release ]; then
       echo fc17
       return
   fi
 
+  issue=$(cat /etc/issue | head -n 1)
   arch_regex="Arch Linux*"
   if [[ $issue == $arch_regex ]]; then
-      echo arch
+      echo archer
       return
   fi
+
   log_debug "Unknown platform: /etc/issue: $issue"
   #exit 1
 }
@@ -126,10 +132,3 @@ function addon_clean_build {
   mkdir build
 }
 
-function addon_platform {
-  if [ -f /etc/redhat-release ]; then
-      echo fc17
-  else
-      echo arch
-  fi
-}

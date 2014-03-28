@@ -18,8 +18,9 @@
 . ./lib/build.sh
 
 node_name=node-$version-$(addon_architecture)
+platform=$(addon_platform)
 
-is_built=$(addon_is_built node/${node_name}.tar.bz2)
+is_built=$(addon_is_built node/${platform}/${node_name}.tar.bz2)
 
 if [ $is_built == "1" ]; then
     echo "$node_name.tar.bz2 is already compiled and deployed"
@@ -39,7 +40,7 @@ else
 
   # Build
   cd node-v${version}
-  INSTALL_DIR=/scratch/jenkins/addons/node/${node_name}
+  INSTALL_DIR=/scratch/jenkins/addons/node/${platform}/${node_name}
   npm_config_prefix=$INSTALL_DIR
   # The --without-snapshot is required to build 0.7 series on the GCC 4.7-pre build we have on FC
   ./configure --prefix=${npm_config_prefix} --without-snapshot
@@ -50,8 +51,8 @@ else
 
   curl https://www.npmjs.org/install.sh | clean=yes sh
 
-  addon_package "/scratch/jenkins/addons/node/${node_name}"
+  addon_package "/scratch/jenkins/addons/node/${platform}/${node_name}"
 
   #Publish
-  addon_publish "node/${node_name}.tar.bz2" "${node_name}.tar.bz2"
+  addon_publish "node/${platform}/${node_name}.tar.bz2" "${node_name}.tar.bz2"
 fi
