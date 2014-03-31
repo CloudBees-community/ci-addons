@@ -26,8 +26,4 @@ if [ ! -d $HEROKU_CLIENT_HOME ]; then
   wget -qO- $HEROKU_CLIENT_URL | tar xz --strip-components 1
 fi
 
-
 export PATH=$HEROKU_HOME/bin:$PATH
-
-echo "Installation complete"
-heroku
