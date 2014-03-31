@@ -1,0 +1,33 @@
+#!/bin/bash
+################################################################################
+#  Copyright (c) 2013, by CloudBees, Inc. All rights reserved.
+#
+#  THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF CLOUDBEES INC
+#
+#  The copyright notice above does not evidence any
+#  actual or intended publication of such source code.
+################################################################################
+
+RUBY_VERSION=${RUBY_VERSION:-2.1.1}
+
+
+curl -s -o use-ruby https://repository-cloudbees.forge.cloudbees.com/distributions/ci-addons/ruby/use-ruby
+RUBY_VERSION=${RUBY_VERSION} . ./use-ruby
+
+# The Heroku distributed installer relies on root access for no good reason.
+# This is a port of their installer - https://toolbelt.heroku.com/install.sh
+
+HEROKU_CLIENT_URL="https://s3.amazonaws.com/assets.heroku.com/heroku-client/heroku-client.tgz"
+HEROKU_CLIENT_HOME=/scratch/jenkins/addons/heroku-client
+
+if [ ! -d $HEROKU_CLIENT_HOME ]; then
+  mkdir -p $HEROKU_CLIENT_HOME
+  cd $HEROKU_CLIENT_HOME
+  wget -qO- $HEROKU_CLIENT_URL | tar xz --strip-components 1
+fi
+
+
+export PATH=$HEROKU_HOME/bin:$PATH
+
+echo "Installation complete"
+heroku
