@@ -22,10 +22,17 @@ if [[ -z $NODE_VERSION ]]; then
    exit 1
 fi
 
-set -e
+set -eu
+
+# Grab our library file
+if [ ! -f /scratch/jenkins/use.sh ]; then
+  wget -q -P /scratch/jenkins https://repository-cloudbees.forge.cloudbees.com/distributions/ci-addons/lib/use.sh
+fi
+. /scratch/jenkins/use.sh
+
 
 mkdir -p /scratch/jenkins/addons/node
-ARCH=`uname -m`
+ARCH=$(addon_architecture)
 
 node_name=node-${NODE_VERSION}-${ARCH}
 
