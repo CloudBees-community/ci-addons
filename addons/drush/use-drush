@@ -1,0 +1,34 @@
+#!/bin/bash
+################################################################################
+#  Copyright (c) 2013, by CloudBees, Inc. All rights reserved.
+#
+#  THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF CLOUDBEES INC
+#
+#  The copyright notice above does not evidence any
+#  actual or intended publication of such source code.
+################################################################################
+# To call this script: 
+#
+# # optinal specify drush version, the default version is "6.*"
+# export DRUSH_VERSION=7.*
+# curl -s https://repository-cloudbees.forge.cloudbees.com/distributions/ci-addons/use-drush | source /dev/stdin
+#
+# set +x
+set -e
+
+DRUSH_VERSION=${DRUSH_VERSION:-6.*}
+
+COMPOSER_HOME=/scratch/jenkins/addons/composer
+
+# get composer to install drush https://getcomposer.org/
+if [ ! -f $COMPOSER_HOME/composer.phar ]; then
+  mkdir -p $COMPOSER_HOME
+  cd $COMPOSER_HOME
+  curl -sS https://getcomposer.org/installer | php -- --install-dir=$COMPOSER_HOME
+fi
+
+export PATH=$COMPOSER_HOME:$PATH
+export PATH=$HOME/.composer/vendor/bin:$PATH
+
+# install drush https://github.com/drush-ops/drush
+$COMPOSER_HOME/composer.phar global require drush/drush:${DRUSH_VERSION}
