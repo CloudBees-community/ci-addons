@@ -5,6 +5,9 @@ USERHOST=root@prd2-storage-forge-01.internal.cloudbees.com
 BASE=/opt/shards/shard02/data/cloudbees/scm-dav/distributions/ci-addons
 #VERSION=`cat $1/version`
 
+echo Creating directories
+ssh $USERHOST "mkdir -p /opt/shards/shard02/data/cloudbees/scm-dav/distributions/ci-addons/${ADDON}"
+
 echo Deploying addon scripts
 CMD="scp addons/$ADDON/use-$ADDON ${USERHOST}:$BASE/$ADDON/use-${ADDON}"
 echo $CMD
