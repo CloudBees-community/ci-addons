@@ -30,14 +30,12 @@ if [ ! -f /scratch/jenkins/use.sh ]; then
 fi
 . /scratch/jenkins/use.sh
 
-
-mkdir -p /scratch/jenkins/addons/node
 ARCH=$(addon_architecture)
-
 node_name=node-${NODE_VERSION}-${ARCH}
 
-test -f /scratch/jenkins/addons/node/${node_name}.tar.bz2 ||  wget -q -P /scratch/jenkins/addons/node https://repository-cloudbees.forge.cloudbees.com/distributions/ci-addons/node/${node_name}.tar.bz2
-
-test -f /scratch/jenkins/addons/node/${node_name}/bin/node || tar xjf /scratch/jenkins/addons/node/${node_name}.tar.bz2  -C /scratch/jenkins/addons/node
+addon_download "node" "${node_name}"
+# The addons/ prefix is due to legacy scripts potentially expecting it in a subdirectory
+# We may be able to fix this at some point
+addon_extract  "addons/node" "${node_name}" "bin/node"
 
 export PATH=/scratch/jenkins/addons/node/${node_name}/bin:$PATH
