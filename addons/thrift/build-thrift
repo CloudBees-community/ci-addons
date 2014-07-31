@@ -33,7 +33,7 @@ else
     cd build
 
     # Download
-    wget http://www.us.apache.org/dist/thrift/${version}/thrift-${version}.tar.gz
+    wget http://archive.apache.org/dist/thrift/${version}/thrift-${version}.tar.gz
 
     # Unpack
     tar xzf thrift-${version}.tar.gz
