@@ -41,7 +41,8 @@ else
 
     # Build
     cd thrift-${version}
-    
+
+    export ERLANG_INSTALL_LIB_DIR=/scratch/jenkins/thrift/${thrift_name}/erlang
     export JAVA_PREFIX=/scratch/jenkins/thrift/${thrift_name}/java
     export PY_PREFIX=/scratch/jenkins/thrift/${thrift_name}/python
     export RUBY_PREFIX=/scratch/jenkins/thrift/${thrift_name}/ruby
