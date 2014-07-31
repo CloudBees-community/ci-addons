@@ -41,7 +41,13 @@ else
 
     # Build
     cd thrift-${version}
-    export JAVA_PREFIX=/scratch/jenkins/thrift/${thrift_name}
+    
+    export JAVA_PREFIX=/scratch/jenkins/thrift/${thrift_name}/java
+    export PY_PREFIX=/scratch/jenkins/thrift/${thrift_name}/python
+    export RUBY_PREFIX=/scratch/jenkins/thrift/${thrift_name}/ruby
+    export PHP_PREFIX=/scratch/jenkins/thrift/${thrift_name}/php
+    export PERL_PREFIX=/scratch/jenkins/thrift/${thrift_name}/perl
+
     ./configure --prefix=/scratch/jenkins/thrift/${thrift_name}
     make && make install ; true
     make install
