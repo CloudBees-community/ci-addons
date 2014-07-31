@@ -41,6 +41,7 @@ else
 
     # Build
     cd thrift-${version}
+    export JAVA_PREFIX=/scratch/jenkins/thrift/${thrift_name}
     ./configure --prefix=/scratch/jenkins/thrift/${thrift_name}
     make && make install ; true
     make install
