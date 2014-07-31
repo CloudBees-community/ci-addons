@@ -15,6 +15,7 @@
 #  limitations under the License.
 ################################################################################
 set +e
+set -x
 
 . ./lib/build.sh
 
@@ -41,7 +42,8 @@ else
     # Build
     cd thrift-${version}
     ./configure --prefix=/scratch/jenkins/thrift/${thrift_name}
-    make && make install
+    make && make install ; true
+    make install
 
     # Package
     addon_package "/scratch/jenkins/thrift/${thrift_name}"
