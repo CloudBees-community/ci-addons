@@ -42,14 +42,14 @@ else
     # Build
     cd thrift-${version}
 
-    export ERLANG_INSTALL_LIB_DIR=/scratch/jenkins/thrift/${thrift_name}/erlang
+    #export ERLANG_INSTALL_LIB_DIR=/scratch/jenkins/thrift/${thrift_name}/erlang
     export JAVA_PREFIX=/scratch/jenkins/thrift/${thrift_name}/java
     export PY_PREFIX=/scratch/jenkins/thrift/${thrift_name}/python
     export RUBY_PREFIX=/scratch/jenkins/thrift/${thrift_name}/ruby
     export PHP_PREFIX=/scratch/jenkins/thrift/${thrift_name}/php
     export PERL_PREFIX=/scratch/jenkins/thrift/${thrift_name}/perl
 
-    ./configure --prefix=/scratch/jenkins/thrift/${thrift_name}
+    ./configure --prefix=/scratch/jenkins/thrift/${thrift_name} --with-erlang=no
     make && make install ; true
     make install
 
