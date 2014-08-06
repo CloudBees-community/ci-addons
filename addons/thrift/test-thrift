@@ -17,18 +17,14 @@
 set -eu
 wget -q https://repository-cloudbees.forge.cloudbees.com/distributions/ci-addons/thrift/use-thrift
 THRIFT_VERSION=${version} . ./use-thrift
+thrift -help
+thrift -version
 
-echo $THRIFT_VERSION
-echo $THRIFT_HOME
-echo $PATH
-find /scratch/jenkins/addons/
-which thrift
-thrift -v
 simpleversion=$(echo $version | sed s/-//g)
 echo "Looking for ${simpleversion}"
 regex="thrift *${simpleversion}*"
 echo "Looking using ${regex}"
-output=$(thrift -v)
+output=$(thrift -version)
 echo "Checking against ${output}"
 if [[ $output == $regex ]]; then
   echo Match: $output
