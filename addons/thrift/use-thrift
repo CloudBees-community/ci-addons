@@ -1,0 +1,44 @@
+#!/bin/sh
+################################################################################
+#  Copyright 2010-2011 CloudBees Inc.
+#
+#  Licensed under the Apache License, Version 2.0 (the "License");
+#  you may not use this file except in compliance with the License.
+#  You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+#  Unless required by applicable law or agreed to in writing, software
+#  distributed under the License is distributed on an "AS IS" BASIS,
+#  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#  See the License for the specific language governing permissions and
+#  limitations under the License.
+################################################################################
+# To call this script:
+# wget -q https://repository-cloudbees.forge.cloudbees.com/distributions/ci-addons/thrift/use-thrift
+# THRIFT_VERSION=0.9.0 . ./use-thrift
+
+if [[ -z $THRIFT_VERSION ]]; then
+   echo "You must set the THRIFT_VERSION environment variable." 1>&2
+fi
+
+BASE=/scratch/jenkins/addons
+mkdir -p ${BASE}
+
+# Grab our library file
+if [ ! -f ${BASE}/use.sh ]; then
+  wget -q -P ${BASE} https://repository-cloudbees.forge.cloudbees.com/distributions/ci-addons/lib/use.sh
+fi
+. ${BASE}/use.sh
+
+
+mkdir -p ${BASE}/thrift
+
+thrift_name=thrift-${THRIFT_VERSION}-$(addon_architecture)
+
+addon_download thrift ${thrift_name}
+
+addon_extract thrift ${thrift_name} bin/thrift
+
+export THRIFT_HOME=${BASE}/thrift/${thrift_name}
+export PATH=${THRIFT_HOME}/bin:$PATH
