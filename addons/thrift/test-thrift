@@ -20,7 +20,8 @@ THRIFT_VERSION=${version} . ./use-thrift
 echo $THRIFT_VERSION
 echo $THRIFT_HOME
 echo $PATH
-bin/thrift -v
+which thrift
+thrift -v
 
 simpleversion=$(echo $version | sed s/-//g)
 echo "Looking for ${simpleversion}"
