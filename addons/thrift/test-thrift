@@ -20,9 +20,9 @@ THRIFT_VERSION=${version} . ./use-thrift
 echo $THRIFT_VERSION
 echo $THRIFT_HOME
 echo $PATH
+find /scratch/jenkins/addons/
 which thrift
 thrift -v
-
 simpleversion=$(echo $version | sed s/-//g)
 echo "Looking for ${simpleversion}"
 regex="thrift *${simpleversion}*"
