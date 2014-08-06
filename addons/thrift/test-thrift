@@ -22,7 +22,7 @@ simpleversion=$(echo $version | sed s/-//g)
 echo "Looking for ${simpleversion}"
 regex="Thrift version *${simpleversion}*"
 echo "Looking using ${regex}"
-output=$(thrift -version)
+output=$(thrift -version ; true)
 echo "Checking against ${output}"
 if [[ $output == $regex ]]; then
   echo Match: $output
