@@ -29,11 +29,10 @@ mkdir -p ${BASE}
 if [ ! -f ${BASE}/use.sh ]; then
   wget -q -P ${BASE} https://repository-cloudbees.forge.cloudbees.com/distributions/ci-addons/lib/use.sh
 fi
+echo Activating Library
 . ${BASE}/use.sh
 
-
-mkdir -p ${BASE}/thrift
-
+echo Preparing Thrift
 thrift_name=thrift-${THRIFT_VERSION}-$(addon_architecture)
 
 echo Downloading Thrift
