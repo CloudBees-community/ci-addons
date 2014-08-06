@@ -25,10 +25,11 @@ fi
 BASE=/scratch/jenkins
 mkdir -p ${BASE}
 
+rm -f ${BASE}/use/sh
 # Grab our library file
-if [ ! -f ${BASE}/use.sh ]; then
-  wget -q -P ${BASE} https://repository-cloudbees.forge.cloudbees.com/distributions/ci-addons/lib/use.sh
-fi
+#if [ ! -f ${BASE}/use.sh ]; then
+wget -q -P ${BASE} https://repository-cloudbees.forge.cloudbees.com/distributions/ci-addons/lib/use.sh
+#fi
 
 #echo Activating Library
 . ${BASE}/use.sh
