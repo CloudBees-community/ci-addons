@@ -18,11 +18,9 @@ set -eu
 wget -q https://repository-cloudbees.forge.cloudbees.com/distributions/ci-addons/thrift/use-thrift
 THRIFT_VERSION=${version} . ./use-thrift
 
-thrift -version
-
 simpleversion=$(echo $version | sed s/-//g)
 echo "Looking for ${simpleversion}"
-regex="thrift *${simpleversion}*"
+regex="Thrift version *${simpleversion}*"
 echo "Looking using ${regex}"
 output=$(thrift -version)
 echo "Checking against ${output}"
