@@ -51,6 +51,10 @@ else
     #export PHP_PREFIX=/scratch/jenkins/thrift/${thrift_name}/php
 
     ./configure --prefix=/scratch/jenkins/thrift/${thrift_name} --with-erlang=no --with-php=no
+    if [ $version == "0.9.1" ]; then
+      # http://stackoverflow.com/questions/18643642/libtool-error-building-thrift-0-9-1-on-ubuntu-13-04
+      (cd test/cpp; ln -s . .libs)
+    fi
     make && make install ; true
     make install
 
