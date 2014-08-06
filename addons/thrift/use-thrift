@@ -36,9 +36,12 @@ mkdir -p ${BASE}/thrift
 
 thrift_name=thrift-${THRIFT_VERSION}-$(addon_architecture)
 
+echo Downloading Thrift
 addon_download thrift ${thrift_name}
 
+echo Extracting Thrift
 addon_extract thrift ${thrift_name} bin/thrift
 
+echo Configuring Thrift
 export THRIFT_HOME=${BASE}/thrift/${thrift_name}
 export PATH=${THRIFT_HOME}/bin:$PATH
