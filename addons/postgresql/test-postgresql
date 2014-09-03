@@ -18,6 +18,7 @@
 set -eu
 
 # For some reason Jenkins is not clearing this area between some builds
+killall postmaster
 rm -rf /tmp/postgresql-data
 
 wget -q https://repository-cloudbees.forge.cloudbees.com/distributions/ci-addons/postgresql/use-postgresql
