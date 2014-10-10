@@ -1,0 +1,19 @@
+So you've got an esoteric piece of software that you need in your build?
+
+It's quite large; or takes quite some time to compile
+
+Create a job to install it 
+* well known location
+* can run the installation on it's
+* can run it as a matrix build to install multiple different version
+* is always synced back to the main workspace
+
+
+Create a job to use it
+
+
+
+We recommend using two scripts
+
+* install-addon
+* run-addon

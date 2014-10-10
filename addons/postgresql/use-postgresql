@@ -31,7 +31,7 @@ if [ ! -f /scratch/jenkins/use.sh ]; then
 fi
 . /scratch/jenkins/use.sh
 
-VERSION=0.2
+VERSION=0.3
 PGVERSION=${POSTGRESQL_VERSION:-9.2.1}
 ARCH=`uname -m`
 PGNAME=postgresql-${PGVERSION}-${ARCH}
@@ -66,6 +66,12 @@ export PATH=${PGHOME}/bin:${PATH}
 export LD_LIBRARY_PATH=${PGHOME}/lib:${LD_LIBRARY_PATH:-}
 
 ################################################################################
+# Display paths of key utilities
+################################################################################
+which pg_dump
+which psql
+
+################################################################################
 # Now start the database
 # You _may_ need to copy the PATH, PGDATA, LD_LIBRARY_PATH settings to your
 #  own build script
@@ -86,4 +92,3 @@ else
   echo "# Having a nap to give the server time to start listening"
   sleep 15
 fi
-
