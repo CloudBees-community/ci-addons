@@ -32,7 +32,7 @@ else
     cd build
 
     # Download
-    wget http://redis.googlecode.com/files/redis-${version}.tar.gz
+    wget http://download.redis.io/releases/redis-${version}.tar.gz
 
     # Unpack
     tar xf redis-${version}.tar.gz
