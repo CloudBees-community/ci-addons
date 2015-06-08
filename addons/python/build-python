@@ -58,15 +58,19 @@ else
     fi
 
     # install pip
+    echo "Easy install pip..."
     easy_install pip
 
     #install virtualenv
+    echo "Easy install virtualenv..."
     pip install virtualenv
 
     # Package
+    echo "Addon package..."
     addon_package "/scratch/jenkins/python/${python_name}"
 
     #Public
+    echo "Publish..."
     addon_publish python/${python_name}.tar.bz2 ${python_name}.tar.bz2
 fi
 
