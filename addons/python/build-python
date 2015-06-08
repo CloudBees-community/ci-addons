@@ -47,7 +47,8 @@ else
     #install distribute
     curl -O http://python-distribute.org/distribute_setup.py
     CW=`pwd`
-    echo "CWD $cw"
+    echo "CWD $CW"
+    ls -lrat
     ls -lart distribute_setup.py
     regex="3.*"
     if [[ ${version} == ${regex} ]]; then
