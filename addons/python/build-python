@@ -53,7 +53,7 @@ else
       # http://pythonhosted.org/setuptools/merge.html
       # python3 distribute_setup.py
       # use get-pip instead from pypa
-      curl -O https://raw.github.com/pypa/pip/master/contrib/get-pip.py
+      curl -O https://raw.githubusercontent.com/pypa/pip/master/contrib/get-pip.py
       python3 get-pip.py
     else
       echo Using python
