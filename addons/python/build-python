@@ -52,14 +52,17 @@ else
       # distribute is no more required,
       # http://pythonhosted.org/setuptools/merge.html
       # python3 distribute_setup.py
+      # use get-pip instead from pypa
+      curl -O https://raw.github.com/pypa/pip/master/contrib/get-pip.py
+      python3 get-pip.py
     else
       echo Using python
       python distribute_setup.py
+      # obsolate, there is no more distribute_setup.py
+      # install pip
+      echo "Easy install pip..."
+      easy_install pip
     fi
-
-    # install pip
-    echo "Easy install pip..."
-    easy_install pip
 
     #install virtualenv
     echo "Easy install virtualenv..."
