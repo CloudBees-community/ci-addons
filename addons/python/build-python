@@ -19,14 +19,16 @@ set -e
 . ./lib/build.sh
 
 python_name=python-$version-$(addon_architecture)
+platform=$(addon_platform)
 
-is_built=$(addon_is_built python/${python_name}.tar.bz2)
+is_built=$(addon_is_built python/${platform}/${python_name}.tar.bz2)
 
 if [ $is_built == "1" ]; then
     echo "$python_name.tar.bz2 is already compiled and deployed"
     exit 0
 else
-
+    set -e
+    
     addon_clean_build
     cd build
 
@@ -74,7 +76,7 @@ else
 
     #Public
     echo "Publish..."
-    addon_publish python/${python_name}.tar.bz2 ${python_name}.tar.bz2
+    addon_publish python/${platform}/${python_name}.tar.bz2 ${python_name}.tar.bz2
 fi
 
 
