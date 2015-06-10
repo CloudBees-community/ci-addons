@@ -47,7 +47,7 @@ else
     export PATH=/scratch/jenkins/python/${python_name}/bin:$PATH
 
     #install distribute
-    curl -O http://python-distribute.org/distribute_setup.py
+    #curl -O http://python-distribute.org/distribute_setup.py
     regex="3.*"
     if [[ ${version} == ${regex} ]]; then
       echo Using python3
@@ -59,7 +59,7 @@ else
       python3 get-pip.py
     else
       echo Using python
-      python distribute_setup.py
+      #python distribute_setup.py
       # obsolate, there is no more distribute_setup.py
       # install pip
       echo "Easy install pip..."
