@@ -63,7 +63,8 @@ else
       # obsolate, there is no more distribute_setup.py
       # install pip
       echo "Easy install pip..."
-      easy_install pip
+      curl -O https://raw.githubusercontent.com/pypa/pip/master/contrib/get-pip.py
+      python get-pip.py
     fi
 
     #install virtualenv
