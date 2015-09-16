@@ -22,20 +22,27 @@ if [[ -z $PYTHON_VERSION ]]; then
    echo "You must set the PYTHON_VERSION environment variable. See http://wiki.cloudbees.com/bin/view/DEV/Python+Builds" 1>&2
 fi
 
-mkdir -p /scratch/jenkins/python
-ARCH=`uname -m`
+# Grab our library file
+if [ ! -f /scratch/jenkins/use.sh ]; then
+  wget -q -P /scratch/jenkins https://repository-cloudbees.forge.cloudbees.com/distributions/ci-addons/lib/use.sh
+fi
+. /scratch/jenkins/use.sh
 
-python_name=python-${PYTHON_VERSION}-${ARCH} #$(uname -p)
+# Ideally this should go in an addons subdirectory, but this would probably break client scripts
+BASE=/scratch/jenkins
+mkdir -p ${BASE}
 
-if [ ! -f /scratch/jenkins/python/${python_name}.tar.bz2 ]; then
-  wget -q -P /scratch/jenkins/python \
-    https://repository-cloudbees.forge.cloudbees.com/distributions/ci-addons/python/${python_name}.tar.bz2
+python_name=python-${PYTHON_VERSION}-$(addon_architecture)
+
+if [ ! -f ${BASE}/python/${python_name}.tar.bz2 ]; then
+  wget -q -P ${BASE}/python \
+    https://repository-cloudbees.forge.cloudbees.com/distributions/ci-addons/python/$(addon_platform)/${python_name}.tar.bz2
 fi
 
 # python changes names per major version, so look for pip
-if [ ! -f /scratch/jenkins/python/${python_name}/bin/pip ]; then
-  tar xjf /scratch/jenkins/python/${python_name}.tar.bz2 -C /scratch/jenkins/python
+if [ ! -f ${BASE}/python/${python_name}/bin/pip ]; then
+  tar xjf ${BASE}/python/${python_name}.tar.bz2 -C ${BASE}/python
 fi
 
-export PYTHON_HOME=/scratch/jenkins/python/${python_name}
-export PATH=$PYTHON_HOME/bin:$PATH
+export PYTHON_HOME=${BASE}/python/${python_name}
+export PATH=${PYTHON_HOME}/bin:$PATH
