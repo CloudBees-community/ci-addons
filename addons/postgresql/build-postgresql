@@ -44,6 +44,7 @@ else
     ./configure \
         --prefix=/scratch/jenkins/postgresql/${postgresql_name} \
         --with-openssl \
+        --with-uuid=e2fs \
         --without-readline
     make && make install
     # Required for contrib package DBLink
