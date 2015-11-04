@@ -1,0 +1,40 @@
+#!/bin/bash
+################################################################################
+#  Copyright (c) 2015, by CloudBees, Inc. All rights reserved.
+#
+#  THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF CLOUDBEES INC
+#
+#  The copyright notice above does not evidence any
+#  actual or intended publication of such source code.
+################################################################################
+# Node builds have become more difficult to complete on the CloudBees infrastructure
+# To avoid these complexities we now download and repack the Node binaries
+
+# https://nodejs.org/dist/v5.0.0/node-v5.0.0-linux-x64.tar.gz
+. ./lib/build.sh
+
+node_name=node-$version-$(addon_architecture)
+platform=$(addon_platform)
+arch="linux-x64"
+
+is_built=$(addon_is_built node/${platform}/${node_name}.tar.bz2)
+
+if [ $is_built == "1" ]; then
+    echo "$node_name.tar.bz2 is already compiled and deployed"
+    exit 0
+else
+  set -e
+  NODEDIR=$WORKSPACE/../node-src
+  node_name_new=node-v${version}-${arch}
+  mkdir -p $NODEDIR
+  cd $NODEDIR
+
+  wget -q https://nodejs.org/dist/v${version}/${node_name_new}.tar.gz
+
+  tar xf ${node_name_new}.tar.gz
+
+  addon_package $NODEDIR/${node_name_new}
+
+  #Publish
+  addon_publish "node/${platform}/${node_name}.tar.bz2" "${node_name_new}.tar.bz2"
+fi

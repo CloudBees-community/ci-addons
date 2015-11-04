@@ -81,7 +81,7 @@ function addon_package {
 
   log_debug "Packaging"
   log_debug "  From: ${ROOT}"
-  log_debug "  To: ${NAME}"
+  log_debug "  To: ${NAME}.tar.bz2"
 
   rm -f ${NAME}.tar.bz2
   tar cjf ${NAME}.tar.bz2 -C "$ROOT/.." ${NAME}
