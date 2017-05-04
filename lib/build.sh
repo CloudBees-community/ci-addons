@@ -31,6 +31,10 @@ function addon_platform {
   fi
 
   if [ -f /etc/redhat-release ]; then
+      if grep -q "Fedora release 25 (Twenty Five)" /etc/redhat-release; then
+          echo fc25
+          return
+      fi
       echo fc17
       return
   fi
@@ -131,4 +135,3 @@ function addon_clean_build {
   log_debug "Creating build directory"
   mkdir build
 }
-
