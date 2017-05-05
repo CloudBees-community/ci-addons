@@ -30,6 +30,11 @@ function addon_architecture {
 function addon_platform {
   issue=$(cat /etc/issue | head -n 1)
 
+  if grep -q "Fedora release 25 (Twenty Five)" /etc/redhat-release; then
+      echo fc25
+      return
+  fi
+
   fedora_regex="Fedora release 17*"
   if [[ $issue == $fedora_regex ]]; then
       echo fc17
@@ -72,4 +77,3 @@ function addon_extract {
     tar xjf ${FILE} -C ${TARGET} --strip-components 1
   fi
 }
-
